@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://dv1uuf8ekm2l5"]
+
+[ext_resource type="Script" uid="uid://dvo8qc6y3y1ly" path="res://main.gd" id="1_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bxevymji3t5c0" path="res://ball.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cdthxusste4wv" path="res://p_1.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://els74ja3f74l" path="res://p_2.tscn" id="3_h2yge"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dhhex"]
+size = Vector2(1216, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fbtk"]
+size = Vector2(1248, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u5wol"]
+size = Vector2(144, 768)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3rms1"]
+size = Vector2(130, 800)
+
+[node name="main" type="Node2D" unique_id=16086159]
+script = ExtResource("1_1bvp3")
+metadata/_edit_vertical_guides_ = [-1128.0]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2010944534]
+
+[node name="ball" parent="." unique_id=765663624 instance=ExtResource("1_ig7tw")]
+unique_name_in_owner = true
+
+[node name="P1" parent="." unique_id=645509018 instance=ExtResource("2_0xm2m")]
+position = Vector2(-552, 0)
+
+[node name="Bottom" type="StaticBody2D" parent="." unique_id=2125669247]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom" unique_id=655636747]
+position = Vector2(0, -352)
+shape = SubResource("RectangleShape2D_dhhex")
+
+[node name="Top" type="StaticBody2D" parent="." unique_id=1234313023]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Top" unique_id=1972293291]
+position = Vector2(0, 360)
+shape = SubResource("RectangleShape2D_7fbtk")
+
+[node name="Right" type="Area2D" parent="." unique_id=164732326]
+position = Vector2(656, 0)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Right" unique_id=1386000817]
+shape = SubResource("RectangleShape2D_u5wol")
+debug_color = Color(0.9882353, 0, 0.31764707, 0.24705882)
+
+[node name="Left" type="Area2D" parent="." unique_id=973245782]
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Left" unique_id=926849684]
+position = Vector2(-648, 0)
+shape = SubResource("RectangleShape2D_3rms1")
+debug_color = Color(0.9882353, 0, 0.2901961, 0.2627451)
+
+[node name="P2" parent="." unique_id=663686201 instance=ExtResource("3_h2yge")]
+position = Vector2(552, 0)
+
+[node name="Line2D" type="Line2D" parent="." unique_id=323104618]
+z_index = -1
+points = PackedVector2Array(0, -48, 0, 360, 0, -352)
+width = 8.0
+default_color = Color(0.8132577, 0.81325775, 0.8132574, 1)
+
+[node name="Score" type="CanvasLayer" parent="." unique_id=74088846]
+
+[node name="LabP1" type="Label" parent="Score" unique_id=832034700]
+offset_left = 464.0
+offset_top = 24.0
+offset_right = 560.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 32
+text = "Left: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabP2" type="Label" parent="Score" unique_id=986993779]
+offset_left = 592.0
+offset_top = 24.0
+offset_right = 708.0
+offset_bottom = 69.0
+theme_override_font_sizes/font_size = 32
+text = "Right: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Border" type="Polygon2D" parent="." unique_id=1186990598]
+position = Vector2(1.8119812e-05, -3.99997)
+scale = Vector2(1, 0.9875)
+color = Color(0.23753911, 0.23753914, 0.23753911, 1)
+invert_enabled = true
+invert_border = 5.0
+polygon = PackedVector2Array(-572, -320.00003, 572, -320.00003, 572, 328.10123, -572, 328.10123)
+
+[connection signal="body_entered" from="Right" to="." method="_on_right_body_entered"]
+[connection signal="body_entered" from="Left" to="." method="_on_left_body_entered"]
